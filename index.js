@@ -8,7 +8,7 @@ http.createServer((req,res) => {
             break;
         case '/about':
             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Welcome to my About page! I have been studying web design now for two years. I am excited to continue learning javascript!');
+            res.end('Welcome to my About page! I have been studying web design now for two years. I am excited to continue learning javascript! Outside of school I enjoy gaming, spending time with family and friends and exercising.');
             break;
         default:
             res.writeHead(404, {'Content-Type': 'text/plain'});
