@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart": "nodemon index.js"
   },
   "author": "Sam Smolen",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "spring2023-it122": "github:Sam-Smolen/Spring2023-it122"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }

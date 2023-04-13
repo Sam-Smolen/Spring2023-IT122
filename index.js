@@ -1,18 +1,24 @@
-const http = require("http"); 
-http.createServer((req,res) => {
-    var path = req.url.toLowerCase();    
-    switch(path) {
-        case '/':
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Welcome to my Home page for IT 122! To learn a bit more about me visit localhost:3000/about');
-            break;
-        case '/about':
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Welcome to my About page! I have been studying web design now for two years. I am excited to continue learning javascript! Outside of school I enjoy gaming, spending time with family and friends and exercising.');
-            break;
-        default:
-            res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.end('Not found');
-            break;
-    }    
-}).listen(process.env.PORT || 3000);
+//setup the server
+const express = require('express');
+const app = express();
+
+// configure path to public folder which will store all static files such as images and stylesheets
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+
+// setup view engine, we will be using ejs
+app.set('view engine', 'ejs');
+
+
+// setup different routes
+app.get('/', (req, res) => { // route to root directory (homepage, index)
+    res.render('index'); // renders index.ejs 
+});
+
+// sets route to localhost:3000/about
+app.get('/about', (req, res) => {
+    res.render('about'); // renders views/about.ejs
+});
+
+// setup server to run on port 3000 (localhost:3000)
+app.listen(3000);
