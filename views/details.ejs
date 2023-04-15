@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../details.css">
+    <link rel="stylesheet" href="../css/details.css">
 </head>
 <body>
+
+    <a href="/">Home</a>
+
     <% if (result) { %>
-        <h2 class="movie-data"><%= title %> details</h2>
+        <h2 class="movie-data"><i><%= title %></i> details</h2>
         <li>Director: <%= result.director %></li>
         <li>Year Released: <%= result.yearReleased %></li>
         <li>Budget: <%= result.budget %></li>
