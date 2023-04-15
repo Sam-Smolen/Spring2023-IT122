@@ -1,7 +1,30 @@
 h1 {
     color: red;
+    text-align: center;
 }
 
 h3 {
     color: green;
+    text-align: center;
+}
+
+ul {
+    display: inline-block;
+    text-align: center;
+}
+
+li {
+    display: inline;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    
+}
+
+h2 {
+    text-align: center;
+}
+
+.container {
+    text-align: center;
 }
