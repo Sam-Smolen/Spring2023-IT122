@@ -1,0 +1,1 @@
+// importing data from mongoDb scary-movies collection

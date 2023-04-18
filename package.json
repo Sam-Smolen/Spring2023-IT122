@@ -12,6 +12,7 @@
   "dependencies": {
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "mongoose": "^7.0.4",
     "spring2023-it122": "github:Sam-Smolen/Spring2023-it122"
   },
   "devDependencies": {
