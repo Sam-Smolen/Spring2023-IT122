@@ -1,10 +1,11 @@
 // importing data from mongoDb movies collection
 
 import mongoose from 'mongoose';
+import { connectionString } from '../credentials.js'
 const { Schema } = mongoose;
 
 // For security, connectionString should be in a separate file and excluded from git
-const connectionString = "mongodb+srv://samsmolen_schooldb_user:Basilisk312@cluster0.wv0dqox.mongodb.net/?retryWrites=true&w=majority";
+//const exampleConnectionString = "mongodb+srv://<dbuser>:<dbpassword>@<cluster>.mongodb.net/test?retryWrites=true";
 
 mongoose.connect(connectionString, {
     dbName: 'school_projects_db',
