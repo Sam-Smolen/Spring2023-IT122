@@ -1,6 +1,7 @@
 //setup the server
 import express from 'express';
 import * as data from './public/data.js';
+import { Movie } from "./models/Movie.js";
 
 const app = express();
 app.use(express.json()); //Used to parse JSON bodies
@@ -15,10 +16,12 @@ app.set('view engine', 'ejs');
 
 
 // setup different routes
-app.get('/', (req, res) => { // route to root directory (homepage, index)
-    let movies = data.getAll(); // get data from movies array in data.js
-    //console.log(movies[3].title);
-    res.render('index', { movies: data.getAll()}); // renders index.ejs, displays number of movie in movies array dynamically
+app.get('/', (req,res) => { // pulls movies data from mongo db collection and renders each movie title
+    Movie.find({}).lean() 
+        .then((movies) => {
+            res.render('index', { movies });
+        })
+        .catch(err => next(err));
 });
 
 // sets route to localhost:3000/about
