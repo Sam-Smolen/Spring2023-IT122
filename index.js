@@ -1,7 +1,7 @@
 //setup the server
 import express from 'express';
-import * as data from './public/data.js';
-import { Movie } from "./models/Movie.js";
+//import * as data from './public/data.js';
+import { Movie } from "./models/Movie.js"; // import movie schema 
 
 const app = express();
 app.use(express.json()); //Used to parse JSON bodies
@@ -34,21 +34,22 @@ app.get('/movies/:title', (req, res) => {
     res.end('you clicked on' + " " + `${req.params.title}`);
 });
 
-app.get('/details/:title', (req, res) => {
-    let result = data.getItem(req.params.title);
-        res.render('details', {
-        title: req.params.title,
-        result
-        }
-    );
+app.get('/details/:title', (req,res,next) => {
+    // db query can use request parameters
+    Movie.findOne({ title:req.params.title }).lean()
+        .then((movie) => {
+            res.render('details', {result: movie} );
+        })
+        .catch(err => next(err));
 });
 
+
 // define 404 handler
-app.use((req,res) => {
-    res.type('text/plain'); 
-    res.status(404);
-    res.send('404 - Oops! page Not found');
-});
+//app.use((req,res) => {
+    //res.type('text/plain'); 
+    //res.status(404);
+    //res.send('404 - Oops! page Not found');
+//});
 
 // setup server to run on port 3000 (localhost:3000)
 app.listen(3000);

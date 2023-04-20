@@ -11,14 +11,14 @@
 
     <a href="/">Home</a>
 
-    <% if (result) { %>
-        <h2 class="movie-data"><i><%= title %></i> details</h2>
+      <%  if (result) { %>
+        <h2 class="movie-data"><i><%= result.title %></i> details</h2>
         <li>Director: <%= result.director %></li>
         <li>Year Released: <%= result.yearReleased %></li>
         <li>Budget: <%= result.budget %></li>
         <li>Box Office: <%= result.boxOffice %></li>
     <% } else { %>
-            <h2 class="not-found"><%= title %> not found</h2>
+            <h2 class="not-found"><%= result.title %> not found</h2>
     <% } %>
 
  
