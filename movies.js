@@ -23,3 +23,13 @@ exports.get = (title) => {
         return item.title.toLowerCase() === title.toLowerCase();
     });
 };
+
+exports.delete = (title) => {
+    // retain array length for later comparison after array modification
+    const oldLength = movies.length;
+    movies = movies.filter((item) => {
+        return item.title !== title;
+    });
+    // if old & new array lengths differ, item was deleted
+    return {deleted: oldLength !== movies.length, total: movies.length };
+};

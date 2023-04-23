@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete ejs</title>
+    <link rel="stylesheet" href="./css/details.css">
+</head>
+<body>
+    <a href="/">Home</a>
+    <%  if (result.deleted) { %>
+        <h2<i><%= result.title %></i> deleted</h2>
+        Remaining Total: <%= result.total %>
+    <% } else { %>
+            <h2 class="not-found"><%= result %> Movie not found</h2>
+    <% } %>
+</body>
+</html>

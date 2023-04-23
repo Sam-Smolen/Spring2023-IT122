@@ -43,13 +43,23 @@ app.get('/details/:title', (req,res,next) => {
         .catch(err => next(err));
 });
 
+app.get('/delete', (req, res) => {
+    Movie.remove({ title:req.params.title }, (err, result) => {
+        if (err) return next(err);
+        let deleted = result.result.n !== 0; // n will be 0 if no docs deleted
+        Movie.count((err, total) => {
+            res.type('text/html');
+            res.render('delete', {title: req.params.title, deleted: result.result.n !== 0, total: total } );    
+        });
+    });
+});
 
-// define 404 handler
-//app.use((req,res) => {
-    //res.type('text/plain'); 
-    //res.status(404);
-    //res.send('404 - Oops! page Not found');
-//});
+
+app.use((req,res) => {
+    res.type('text/plain'); 
+    res.status(404);
+    res.send('404 - Not found');
+});
 
 // setup server to run on port 3000 (localhost:3000)
 app.listen(3000);
