@@ -71,8 +71,8 @@ app.post('/api/v1/add', (req, res, next) => {
 // deletes existing movie based on ID
 app.delete('/api/v1/delete/:_id', async (req, res) => {
     console.log(req.params._id);
-    let deleted = await Movie.deleteOne({_id: req.params._id});
-    res.send(deleted);
+    let result = await Movie.deleteOne({_id: req.params._id});
+    res.json({result});
     console.log("done");
  });
 
