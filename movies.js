@@ -24,6 +24,17 @@ exports.get = (title) => {
     });
 };
 
+exports.add = (newMovie) => {
+    const oldLength = movies.length;
+    // use existing get() method to check if book already in our list
+    let found = this.get(newMovie.title);
+    if (!found) {
+        movies.push(newMovie);
+    }
+    // if old & new array lengths differ, item was added
+    return {added: oldLength !== movies.length, total: movies.length };
+};
+
 exports.delete = (title) => {
     // retain array length for later comparison after array modification
     const oldLength = movies.length;

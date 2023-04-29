@@ -5,11 +5,15 @@ import { Movie } from "./models/Movie.js"; // import movie schema
 
 const app = express();
 app.use(express.json()); //Used to parse JSON bodies
+app.use(express.urlencoded());
 
 
 // configure path to public folder which will store all static files such as images and stylesheets
 //import * as path from 'path';
 app.use(express.static('./public'));
+
+import cors from 'cors';
+app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 
 // setup view engine, we will be using ejs
 app.set('view engine', 'ejs');
@@ -23,6 +27,53 @@ app.get('/', (req,res) => { // pulls movies data from mongo db collection and re
         })
         .catch(err => next(err));
 });
+
+// api routes
+app.get('/api/v1/movies', (req, res) => {
+    Movie.find({}).lean()
+    .then((movies) => {
+        res.json(movies);
+    })
+    .catch(err => {
+        res.status(500).send("An Error occured");
+    })
+});
+
+app.get('/api/v1/movies/:title', (req, res) => {
+    Movie.findOne({ title: req.params.title }).lean()
+        .then((movie) => {
+            res.json(movie);
+        })
+        .catch(err => {
+            res.status(500).send("An Error Occured");
+        })
+});
+
+app.post('/api/v1/movies/:title', (req, res) => {
+    Movie.updateOne({_id: req.body._id}, {title: req.body.title, director: req.body.director, yearReleased: req.body.yearReleased, budget: req.body.budget, boxOffice: req.body.boxOffice})
+    .then((movie) => {
+        res.json( {result: movie} );
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/v1/add', (req, res, next) => {
+    console.log(req.body);
+    //res.json(req.body);
+    if(!req.body._id) { // inserts new movie
+        let movie = new Movie({title: req.body.title, director: req.body.director, yearReleased: req.body.yearReleased, budget: req.body.budget, boxOffice: req.body.boxOffice});
+        movie.save();
+        res.json({updated: 0, _id: movie._id});
+    } else {
+        Movie.updateOne({_id: req.body._id}, {title: req.body.title, director: req.body.director, yearReleased: req.body.yearReleased, budget: req.body.budget, boxOffice: req.body.boxOffice})
+    .then((movie) => {
+        res.json( {result: movie} );
+    })
+    .catch(err => next(err));
+    }
+
+});
+
 
 // sets route to localhost:3000/about
 app.get('/about', (req, res) => {
@@ -42,6 +93,8 @@ app.get('/details/:title', (req,res,next) => {
         })
         .catch(err => next(err));
 });
+
+
 
 app.get('/delete', (req, res) => {
     Movie.remove({ title:req.params.title }, (err, result) => {
