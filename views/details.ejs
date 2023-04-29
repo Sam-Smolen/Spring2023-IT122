@@ -17,8 +17,9 @@
         <li>Year Released: <%= result.yearReleased %></li>
         <li>Budget: <%= result.budget %></li>
         <li>Box Office: <%= result.boxOffice %></li>
+        
         <p>
-            <a href="/delete/<%=result.title %>">Delete</a>
+            <a href="/api/v1/delete/<%=result._id %>">Delete</a>
         </p>
     <% } else { %>
             <h2 class="not-found"><%= result %> Movie not found</h2>

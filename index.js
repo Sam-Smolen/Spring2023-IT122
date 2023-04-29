@@ -39,6 +39,7 @@ app.get('/api/v1/movies', (req, res) => {
     })
 });
 
+// pulls info from movies API by movie title
 app.get('/api/v1/movies/:title', (req, res) => {
     Movie.findOne({ title: req.params.title }).lean()
         .then((movie) => {
@@ -49,14 +50,7 @@ app.get('/api/v1/movies/:title', (req, res) => {
         })
 });
 
-app.post('/api/v1/movies/:title', (req, res) => {
-    Movie.updateOne({_id: req.body._id}, {title: req.body.title, director: req.body.director, yearReleased: req.body.yearReleased, budget: req.body.budget, boxOffice: req.body.boxOffice})
-    .then((movie) => {
-        res.json( {result: movie} );
-    })
-    .catch(err => next(err));
-});
-
+// posts new movie to DB or updates an existing movie
 app.post('/api/v1/add', (req, res, next) => {
     console.log(req.body);
     //res.json(req.body);
@@ -73,6 +67,14 @@ app.post('/api/v1/add', (req, res, next) => {
     }
 
 });
+
+// deletes existing movie based on ID
+app.delete('/api/v1/delete/:_id', async (req, res) => {
+    console.log(req.params._id);
+    let deleted = await Movie.deleteOne({_id: req.params._id});
+    res.send(deleted);
+    console.log("done");
+ });
 
 
 // sets route to localhost:3000/about
@@ -92,19 +94,6 @@ app.get('/details/:title', (req,res,next) => {
             res.render('details', {result: movie} );
         })
         .catch(err => next(err));
-});
-
-
-
-app.get('/delete', (req, res) => {
-    Movie.remove({ title:req.params.title }, (err, result) => {
-        if (err) return next(err);
-        let deleted = result.result.n !== 0; // n will be 0 if no docs deleted
-        Movie.count((err, total) => {
-            res.type('text/html');
-            res.render('delete', {title: req.params.title, deleted: result.result.n !== 0, total: total } );    
-        });
-    });
 });
 
 
