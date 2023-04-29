@@ -76,7 +76,12 @@ app.delete('/api/v1/delete/:_id', async (req, res) => {
     console.log("done");
  });
 
-
+ app.delete('/api/v1/deletes/:title', async (req, res) => {
+    console.log(req.params.title);
+    let result = await Movie.deleteOne({title: req.params.title});
+    res.json({result});
+    console.log("done");
+ });
 // sets route to localhost:3000/about
 app.get('/about', (req, res) => {
     res.render('about'); // renders views/about.ejs
