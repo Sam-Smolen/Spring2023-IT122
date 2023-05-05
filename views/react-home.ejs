@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Homepage</title>
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- React Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+       
+    const movies = <%- items %>;
+       
+
+    const Movies = (props) => {
+        // props is an array
+        console.log(props)
+        const listItems = props.data.map((item) =>
+        <li key={item._id} id={item._id} onClick={props.clickHandler}>
+            {item.title}
+        </li>);
+        return <ul>{listItems}</ul>
+    }
+
+    const showDetail = (event) => {
+        console.log(event.target)
+        console.log(event.target.innerText)
+        console.log(event.target.id)
+        window.location.href = "/details/" + event.target.innerText;
+    }
+
+
+        const App = () => {
+            return <div>
+                <h1>Hello, IT122!</h1>
+                <h2>Click on a movie title to view more details!</h2>
+                <h4><i>< Movies data={movies} clickHandler={showDetail}/></i></h4>
+            </div>;
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(< App />);
+
+
+
+    </script>
+
+  
+</body>
+</html>

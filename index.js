@@ -13,6 +13,7 @@ app.use(express.urlencoded());
 app.use(express.static('./public'));
 
 import cors from 'cors';
+import { getAll } from './public/data.js';
 app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
 
 // setup view engine, we will be using ejs
@@ -82,6 +83,16 @@ app.delete('/api/v1/delete/:_id', async (req, res) => {
     res.json({result});
     console.log("done");
  });
+
+// route for react home-page
+app.get('/react-home', (req, res) => {
+    Movie.find({}).lean()
+    .then((movies) => {
+        res.render('react-home', {items: JSON.stringify(movies)});
+    });
+});
+
+// local routes
 // sets route to localhost:3000/about
 app.get('/about', (req, res) => {
     res.render('about'); // renders views/about.ejs
