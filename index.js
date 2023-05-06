@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req,res) => { // pulls movies data from mongo db collection and renders each movie title
     Movie.find({}).lean() 
         .then((movies) => {
-            res.render('index', { movies });
+            res.render('react-home', {items: JSON.stringify(movies)});
         })
         .catch(err => next(err));
 });
@@ -85,12 +85,13 @@ app.delete('/api/v1/delete/:_id', async (req, res) => {
  });
 
 // route for react home-page
-app.get('/react-home', (req, res) => {
-    Movie.find({}).lean()
-    .then((movies) => {
-        res.render('react-home', {items: JSON.stringify(movies)});
-    });
-});
+///app.get('/react-home', (req, res) => {
+    //Movie.find({}).lean()
+    //.then((movies) => {
+        //res.render('react-home', {items: JSON.stringify(movies)});
+    //});
+    
+//});
 
 // local routes
 // sets route to localhost:3000/about
