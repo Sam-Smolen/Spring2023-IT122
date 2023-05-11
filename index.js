@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req,res) => { // pulls movies data from mongo db collection and renders each movie title
     Movie.find({}).lean() 
         .then((movies) => {
-            res.render('react-home', {items: JSON.stringify(movies)});
+            res.render('react-home', {movies: JSON.stringify(movies)});
         })
         .catch(err => next(err));
 });

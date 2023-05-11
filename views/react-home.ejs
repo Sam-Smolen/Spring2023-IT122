@@ -18,12 +18,9 @@
     <div id="root"></div>
     <script type="text/babel">
        
-    const movies = <%- items %>;
-       
-
     const Movies = (props) => {
         // props is an array
-        console.log(props)
+        //console.log(props)
         const listItems = props.data.map((item) =>
         <li key={item._id} id={item._id} onClick={props.clickHandler}>
             {item.title}
@@ -38,12 +35,65 @@
         window.location.href = "/details/" + event.target.innerText;
     }
 
+    const MovieDetail = (props) => {
+        return (
+        <div className="movie_details">    
+            <h2>Movie details:</h2> 
+            <form>
+            Title: <input type="text" name="title" value={props.item.title || ""} onChange={props.handleChange}></input>
+            Director: <input type="text" name="director" value={props.item.director || ""} onChange={props.handleChange}></input>
+            Year Released: <input type="number" name="yearReleased" value={props.item.yearReleased || ""} onChange={props.handleChange}></input>
+            Budget: <input type="text" name="budget" value={props.item.budget || ""} onChange={props.handleChange}></input>
+            Box-office: <input type="text" name="boxOffice" value={props.item.boxOffice || ""} onChange={props.handleChange}></input>
+            </form>
+            <button id="clear_form" name="clear" onClick={props.clearForm}>Clear</button>
+        </div>
+        )
+    }
+
 
         const App = () => {
+            const [items, setItems] = React.useState( <%- movies %> );
+            const [currentItem, setCurrentItem] = React.useState({});
+            //console.log(items)
+
+            // list click event handler 
+            const selectItem = (event) => {
+                console.log(event.target);
+                const found = items.find((item) => {
+                    return item.title === event.target.innerText;
+             });
+                setCurrentItem(found);
+            }
+            // clear form
+            const clearForm = () => {
+                setCurrentItem({});
+            }
+
+            // update list state
+            const handleChange = (event) => {
+                let newItem = { ...currentItem } ;
+                newItem[event.target.name] = event.target.value;
+            // update currentItem state
+                 setCurrentItem(newItem);
+            // update list state
+            items.find((item, index) => {
+                if (item._id == newItem._id) {
+                items[index] = newItem;
+            setItems(items);
+            }
+          })
+        }
+
             return <div>
                 <h1>Hello, IT122!</h1>
-                <h2>Click on a movie title to view more details!</h2>
-                <h4><i>< Movies data={movies} clickHandler={showDetail}/></i></h4>
+                <h2>Movie inventory</h2>
+                <h4><b>Click on a movie title to learn more details!</b></h4>
+                <h3><i>< Movies data={items} clickHandler={selectItem}/></i></h3>
+                < MovieDetail item={currentItem}
+                handleChange={handleChange}
+                clearForm={clearForm}
+                />
             </div>;
         }
 
