@@ -49,6 +49,7 @@
             <div className="buttons">
             <button id="save_movie" name="save" onClick={props.saveItem}>Save</button>
             <button id="clear_form" name="clear" onClick={props.clearForm}>Clear</button>
+            <button id="delete_movie" name="delete" onClick={props.deleteItem}>Delete</button>
             </div>
         </div>
         )
@@ -107,6 +108,22 @@
             })
         }
 
+            const deleteItem = () => {
+                let id = currentItem._id;
+                // delete item from DB
+                 fetch(`/api/v1/delete/${id}`)
+                .then(res => res.json())
+                .then((data) => {
+                // remove item from UI list
+                  const newItems = items.filter((item) => {
+                    return item._id !== id;
+                  });
+              setItems(newItems);
+              // clear form
+              setCurrentItem({})
+            });
+        }
+
             // update list state
             const handleChange = (event) => {
                 let newItem = { ...currentItem } ;
@@ -134,6 +151,7 @@
                 handleChange={handleChange}
                 clearForm={clearForm}
                 saveItem={saveItem}
+                deleteItem={deleteItem}
                 />
             </div>;
             

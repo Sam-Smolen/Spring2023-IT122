@@ -73,13 +73,18 @@ app.post('/api/v1/add/', (req, res, next) => {
 
 });
 
+app.get('/api/v1/delete/:_id', async (req,res) => {
+    let result = await Movie.deleteOne({_id: req.params._id});
+    res.json({"deleted": result});
+});
+
 // deletes existing movie based on ID
-app.delete('/api/v1/delete/:_id', async (req, res) => {
+/*app.delete('/api/v1/delete/:_id', async (req, res) => {
     console.log(req.params._id);
     let result = await Movie.deleteOne({_id: req.params._id});
     res.json({result});
     console.log("done");
- });
+ });*/
 
  app.delete('/api/v1/deletes/:title', async (req, res) => {
     console.log(req.params.title);
