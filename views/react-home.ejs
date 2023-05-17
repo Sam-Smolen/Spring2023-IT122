@@ -46,22 +46,35 @@
             <label>Budget: </label><input type="text" name="budget" value={props.item.budget || ""} onChange={props.handleChange}></input>
             <label>Box-office: </label><input type="text" name="boxOffice" value={props.item.boxOffice || ""} onChange={props.handleChange}></input>
             </form>
+            <div className="buttons">
+            <button id="save_movie" name="save" onClick={props.saveItem}>Save</button>
             <button id="clear_form" name="clear" onClick={props.clearForm}>Clear</button>
+            </div>
         </div>
         )
     }
 
 
-        const App = () => {
-            const [items, setItems] = React.useState( <%- movies %> );
+        const App = (props) => {
+            const [items, setItems] = React.useState([]);
             const [currentItem, setCurrentItem] = React.useState({});
             //console.log(items)
+            // load data after component has rendered
+            React.useEffect(() => {
+                const fetchData = async () => {
+                    fetch("/api/v1/movies").then(res => res.json())
+                    .then((json) => {
+                    setItems(json);
+                    })
+                }
+                fetchData()
+             }, []);
 
             // list click event handler 
             const selectItem = (event) => {
                 console.log(event.target);
                 const found = items.find((item) => {
-                    return item.title === event.target.innerText;
+                    return item._id === event.target.id;
              });
                 setCurrentItem(found);
             }
@@ -69,6 +82,30 @@
             const clearForm = () => {
                 setCurrentItem({});
             }
+
+            // save an item to DB
+            const saveItem = () => {
+            if (!currentItem.title) {
+              return;
+            }
+            fetch("/api/v1/add/", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(currentItem)
+            })
+            .then(res => res.json())
+            .then((data) => {
+                // if item has no _id, it wasn't previously saved in DB
+                if (!currentItem._id) {
+                    currentItem._id = data._id;
+                    setCurrentItem(currentItem);
+                    // update items list
+                    let newItems = [...items];
+                    newItems.push(currentItem);
+                    setItems(newItems);
+                }
+            })
+        }
 
             // update list state
             const handleChange = (event) => {
@@ -92,9 +129,11 @@
                 <h4><b>Click on a movie title to learn more details!</b></h4>
                 </div>
                 <h3><i>< Movies data={items} clickHandler={selectItem}/></i></h3>
+                <hr />
                 < MovieDetail item={currentItem}
                 handleChange={handleChange}
                 clearForm={clearForm}
+                saveItem={saveItem}
                 />
             </div>;
             

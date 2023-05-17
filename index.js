@@ -21,12 +21,16 @@ app.set('view engine', 'ejs');
 
 
 // setup different routes
-app.get('/', (req,res) => { // pulls movies data from mongo db collection and renders each movie title
+/*app.get('/', (req,res) => { // pulls movies data from mongo db collection and renders each movie title
     Movie.find({}).lean() 
         .then((movies) => {
             res.render('react-home', {movies: JSON.stringify(movies)});
         })
         .catch(err => next(err));
+});*/
+
+app.get('/', (req, res) => {
+    res.render('react-home');
 });
 
 // api routes
@@ -52,7 +56,7 @@ app.get('/api/v1/movies/:title', (req, res) => {
 });
 
 // posts new movie to DB or updates an existing movie
-app.post('/api/v1/add', (req, res, next) => {
+app.post('/api/v1/add/', (req, res, next) => {
     console.log(req.body);
     //res.json(req.body);
     if(!req.body._id) { // inserts new movie
