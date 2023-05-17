@@ -4,20 +4,26 @@ body {
 }
 
 h1, h2, h3, h4, h5{
-    text-align: center;
+    /*text-align: center;*/
+}
+
+.inventory_container {
+    margin-left: 90px;
 }
 
 
 ul {
     display: inline-block;
-    text-align: center;
+    /*text-align: center;*/
+    list-style-type: none;
+    text-align: left;
 }
 
 li {
-    display: inline;
+    /*display: inline;*/
     margin-left: 50px;
     margin-right: 50px;
-    text-align: center;
+    /*text-align: center;*/
     
 }
 
@@ -31,9 +37,28 @@ li a {
 
 .movie_details {
     display: block;
-    text-align: center;
+    margin-left: 100px;
+    
 }
 
 #clear_form {
-    margin-top: 20px;
+    margin-top: 10rem;
+    display: block;
+    clear: both;
+    
+}
+
+form {
+    width: 350px;
+}
+
+form > label
+{
+  float: left;
+  clear: right;
+}
+
+form > input
+{
+  float: right;
 }

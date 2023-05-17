@@ -40,11 +40,11 @@
         <div className="movie_details">    
             <h2>Movie details:</h2> 
             <form>
-            Title: <input type="text" name="title" value={props.item.title || ""} onChange={props.handleChange}></input>
-            Director: <input type="text" name="director" value={props.item.director || ""} onChange={props.handleChange}></input>
-            Year Released: <input type="number" name="yearReleased" value={props.item.yearReleased || ""} onChange={props.handleChange}></input>
-            Budget: <input type="text" name="budget" value={props.item.budget || ""} onChange={props.handleChange}></input>
-            Box-office: <input type="text" name="boxOffice" value={props.item.boxOffice || ""} onChange={props.handleChange}></input>
+            <label>Title: </label><input type="text" name="title" value={props.item.title || ""} onChange={props.handleChange}></input>
+            <label>Director: </label><input type="text" name="director" value={props.item.director || ""} onChange={props.handleChange}></input>
+            <label>Year Released: </label><input type="number" name="yearReleased" value={props.item.yearReleased || ""} onChange={props.handleChange}></input>
+            <label>Budget: </label><input type="text" name="budget" value={props.item.budget || ""} onChange={props.handleChange}></input>
+            <label>Box-office: </label><input type="text" name="boxOffice" value={props.item.boxOffice || ""} onChange={props.handleChange}></input>
             </form>
             <button id="clear_form" name="clear" onClick={props.clearForm}>Clear</button>
         </div>
@@ -86,15 +86,18 @@
         }
 
             return <div>
+                <div className="inventory_container">
                 <h1>Hello, IT122!</h1>
                 <h2>Movie inventory</h2>
                 <h4><b>Click on a movie title to learn more details!</b></h4>
+                </div>
                 <h3><i>< Movies data={items} clickHandler={selectItem}/></i></h3>
                 < MovieDetail item={currentItem}
                 handleChange={handleChange}
                 clearForm={clearForm}
                 />
             </div>;
+            
         }
 
         const container = document.getElementById('root');
