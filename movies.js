@@ -1,6 +1,8 @@
 'use strict'
 import { Movie } from "./models/Movie.js";
 
+var movies;
+
 // export MongoDb methods as promise functions
 exports.getAll = () => {
     // find all documents 

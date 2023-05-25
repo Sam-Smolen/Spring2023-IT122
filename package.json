@@ -17,6 +17,8 @@
     "spring2023-it122": "github:Sam-Smolen/Spring2023-it122"
   },
   "devDependencies": {
+    "eslint": "^8.41.0",
+    "jest": "^29.5.0",
     "nodemon": "^2.0.22"
   }
 }
